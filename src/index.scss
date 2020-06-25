@@ -1,0 +1,297 @@
+@import 'normalize.scss';
+@import 'nanum-font.scss';
+@import 'rwd-break-point.scss';
+@import 'base.scss';
+
+// RWD break point
+// @include phone-and-tablet {}
+// @include phone {}
+// @include tablet-and-desktop {}
+// @include tablet {}
+// @include desktop {}
+
+body {
+    transition: background .4s;
+}
+
+.theme {
+    // 테마 변수: 첫 번째 값은 light, 두 번째 값은 dark
+    $theme-font: ('Nanum Gothic', sans-serif), ('Nanum Myeongjo', serif);
+    $theme-color: #141411, #d7d7d7;
+    $theme-background: #ffffff, #202020;
+    &--light {
+        font-family: nth($theme-font, 1);
+        color: nth($theme-color, 1);
+        background: nth($theme-background, 1);
+    }
+    &--dark {
+        font-family: nth($theme-font, 2);
+        color: nth($theme-color, 2);
+        background: nth($theme-background, 2);
+    }
+}
+
+.main {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    @include tablet-and-desktop {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @include desktop {
+        max-width: 800px;
+    }
+}
+
+.control {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+    font-size: 0;
+    line-height: 0;
+    @include phone {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    @include tablet-and-desktop {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @include tablet {
+        max-width: 720px;
+    }
+    fieldset {
+        display: inline-block;
+        &:nth-child(n+2) {
+            @include phone-and-tablet {
+                margin-left: 10px;
+            }
+            @include desktop {
+                margin-left: 5px;
+            }
+        }
+    }
+    &__input,
+    &__label {
+        display: inline-block;
+        vertical-align: top;
+        @include phone-and-tablet {
+            // 모바일 웹에서 콘트롤에 권장하는 최소 크기 48x48px
+            // 구글 레퍼런스 - https://t.ly/kvd2q
+            width: 48px;
+            height: 48px;
+        }
+        @include desktop {
+            width: 26px;
+            height: 26px;
+        }
+    }
+    &__input {
+        opacity: 0;
+        @include phone-and-tablet {
+            margin-right: -48px;
+        }
+        @include desktop {
+            margin-right: -26px;
+        }
+    }
+    &__label {
+        position: relative;
+        overflow: hidden;
+        font-size: 1px;
+        white-space: nowrap;
+        color: transparent;
+        border: 1px solid;
+        .theme--light & {
+            border-color: #ddd;
+        }
+        .theme--dark & {
+            border-color: #666;
+        }
+        &:nth-of-type(n+2) {
+            margin-left: -1px;
+        }
+        [checked] + & {
+            border-color: #00c73c;
+            z-index: 2;
+        }
+        :focus + & {
+            outline: 4px auto rgb(59,153,252);
+        }
+        &--font {
+            .theme--light & {
+                background: #fff;
+            }
+            .theme--dark & {
+                background: #141411;
+            }
+            &:before {
+                content: 'A';
+                display: block;
+                text-align: center;
+                .theme--light & {
+                    color: #767676;
+                }
+                .theme--dark & {
+                    color: #888;
+                }
+                @include phone-and-tablet {
+                    line-height: 46px;
+                }
+                @include desktop {
+                    line-height: 24px;
+                }
+            }
+            &:nth-of-type(1):before {
+                @include phone-and-tablet {
+                    font-size: 24px;
+                }
+                @include desktop {
+                    font-size: 12px;
+                }
+            }
+            &:nth-of-type(2):before {
+                @include phone-and-tablet {
+                    font-size: 32px;
+                }
+                @include desktop {
+                    font-size: 16px;
+                }
+            }
+            .theme--light [checked] + &:before {
+                color: #000;
+            }
+            .theme--dark [checked] + &:before {
+                color: #fff;
+            }
+        }
+        &--theme {
+            &:nth-of-type(1) {
+                background: #fff;
+            }
+            &:nth-of-type(2) {
+                background: #888;
+            }
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                @include phone-and-tablet {
+                    left: 10px;
+                    right: 10px;
+                }
+                @include desktop {
+                    left: 5px;
+                    right: 5px;
+                }
+            }
+            &:before {
+                background: #666;
+                @include phone-and-tablet {
+                    top: 10px;
+                    height: 10px;
+                }
+                @include desktop {
+                    top: 5px;
+                    height: 6px;
+                }
+                [checked] + & { background: #00c73c; }
+            }
+            &:after {
+                border-top: solid #666;
+                border-bottom: solid #666;
+                @include phone-and-tablet {
+                    top: 24px;
+                    height: 12px;
+                    border-width: 4px;
+                }
+                @include desktop {
+                    top: 13px;
+                    height: 6px;
+                    border-width: 2px;
+                }
+                [checked] + & { border-color: #00c73c; }
+            }
+        }
+    }
+}
+
+.article {
+    &__p {
+        @include phone {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        @include tablet {
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        &--left {
+            text-align: left;
+        }
+        &--center {
+            text-align: center;
+        }
+        &--right {
+            text-align: right;
+        }
+        .font--small & {
+            @include phone {
+                margin-top: 25px;
+                margin-bottom: 25px;
+                font-size: 16px;
+                line-height: 1.62;
+            }
+            @include tablet-and-desktop {
+                margin-top: 18px;
+                margin-bottom: 18px;
+                font-size: 14px;
+                line-height: 1.85;
+            }
+        }
+        .font--large & {
+            @include phone {
+                margin-top: 30px;
+                margin-bottom: 30px;
+                font-size: 18px;
+                line-height: 1.55;
+            }
+            @include tablet-and-desktop {
+                margin-top: 23px;
+                margin-bottom: 23px;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        }
+    }
+    &__img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        &--center {
+            & + & { margin-top: -15px; }
+        }
+        &--left,
+        &--right {
+            @include tablet-and-desktop {
+                max-width: 300px;
+            }
+        }
+        &--left {
+            @include tablet-and-desktop {
+                float: left;
+                margin-right: 20px;
+            }
+        }
+        &--right {
+            @include tablet-and-desktop {
+                float: right;
+                margin-left: 20px;
+            }
+        }
+    }
+}
